@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="MySQL,SQLInjection,False," />
 
 
 
@@ -97,14 +97,21 @@
 
 
 
+<meta name="description" content="原文链接 0x01 False Injection首先是看了文章之后知道了一个MySQL的特性    select * from user where username=0;     这条语句指向之后会返回所有值    select * from users where password=0;     这里涉及到了MySQL的隐式类型转换   官方文档是这样写的：      The followi">
+<meta name="keywords" content="MySQL,SQLInjection,False">
 <meta property="og:type" content="article">
-<meta property="og:title" content="new article">
-<meta property="og:url" content="https://alisitaweb.github.io/2017/09/05/new-article/index.html">
+<meta property="og:title" content="MySQL False 注入姿势学习">
+<meta property="og:url" content="https://alisitaweb.github.io/2017/09/06/MySQL-False注入姿势学习/index.html">
 <meta property="og:site_name" content="Alisita&#39;s blogs">
+<meta property="og:description" content="原文链接 0x01 False Injection首先是看了文章之后知道了一个MySQL的特性    select * from user where username=0;     这条语句指向之后会返回所有值    select * from users where password=0;     这里涉及到了MySQL的隐式类型转换   官方文档是这样写的：      The followi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-05T09:02:39.457Z">
+<meta property="og:image" content="https://alisitaweb.github.io/2017/09/06/MySQL-False注入姿势学习/images/1.png">
+<meta property="og:image" content="https://alisitaweb.github.io/2017/09/06/MySQL-False注入姿势学习/images/2.png">
+<meta property="og:updated_time" content="2017-09-06T13:45:39.823Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="new article">
+<meta name="twitter:title" content="MySQL False 注入姿势学习">
+<meta name="twitter:description" content="原文链接 0x01 False Injection首先是看了文章之后知道了一个MySQL的特性    select * from user where username=0;     这条语句指向之后会返回所有值    select * from users where password=0;     这里涉及到了MySQL的隐式类型转换   官方文档是这样写的：      The followi">
+<meta name="twitter:image" content="https://alisitaweb.github.io/2017/09/06/MySQL-False注入姿势学习/images/1.png">
 
 
 
@@ -134,13 +141,13 @@
 
 
 
-  <link rel="canonical" href="https://alisitaweb.github.io/2017/09/05/new-article/"/>
+  <link rel="canonical" href="https://alisitaweb.github.io/2017/09/06/MySQL-False注入姿势学习/"/>
 
 
 
 
 
-  <title>new article | Alisita's blogs</title>
+  <title>MySQL False 注入姿势学习 | Alisita's blogs</title>
   
 
 
@@ -308,7 +315,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2017/09/05/new-article/">
+    <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2017/09/06/MySQL-False注入姿势学习/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuanbo">
@@ -325,7 +332,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">new article</h1>
+          <h1 class="post-title" itemprop="name headline">MySQL False 注入姿势学习</h1>
         
 
         <div class="post-meta">
@@ -337,8 +344,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T17:02:39+08:00">
-                2017-09-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-06T21:43:32+08:00">
+                2017-09-06
               </time>
             
 
@@ -347,6 +354,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SQL-Injection/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL Injection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -375,7 +404,34 @@
       
 
       
-        
+        <p><a href="http://bobao.360.cn/learning/detail/3804.html" target="_blank" rel="external">原文链接</a></p>
+<h3 id="0x01-False-Injection"><a href="#0x01-False-Injection" class="headerlink" title="0x01 False Injection"></a>0x01 False Injection</h3><p>首先是看了文章之后知道了一个MySQL的特性<br>    <code>select * from user where username=0;</code><br>    <img src="./images/1.png" alt="enter description here" title="1"></p>
+<p>这条语句指向之后会返回所有值</p>
+<p>   <code>select * from users where password=0;</code><br>   <img src="./images/2.png" alt="enter description here" title="2"></p>
+<p> 这里涉及到了MySQL的隐式类型转换</p>
+<p>  官方文档是这样写的：<br>      <em>The following rules describe how conversion occurs for comparison operations:</em></p>
+<p><em>If one or both arguments are NULL, the result of the comparison is NULL, except for the NULL-safe &lt;=&gt; equality comparison operator. For NULL &lt;=&gt; NULL, the result is true. No conversion is needed.</em></p>
+<p><em>If both arguments in a comparison operation are strings, they are compared as strings.</em></p>
+<p><em>If both arguments are integers, they are compared as integers.</em></p>
+<p><em>Hexadecimal values are treated as binary strings if not compared to a number.</em></p>
+<p><em>If one of the arguments is a TIMESTAMP or DATETIME column and the other argument is a constant, the constant is converted to a timestamp before the comparison is performed. This is done to be more ODBC-friendly. Note that this is not done for the arguments to IN()! To be safe, always use complete datetime, date, or time strings when doing comparisons. For example, to achieve best results when using BETWEEN with date or time values, use CAST() to explicitly convert the values to the desired data type.</em></p>
+<p><em>If one of the arguments is a decimal value, comparison depends on the other argument. The arguments are compared as decimal values if the other argument is a decimal or integer value, or as floating-point values if the other argument is a floating-point value.</em></p>
+<p><em>In all other cases, the arguments are compared as floating-point (real) numbers</em></p>
+<hr>
+<p>大概意思就是：<br>    如果两个参数比较，有至少一个NULL，结果就是NULL，除了是用NULL&lt;=&gt;NULL 会返回1。不做类型转换</p>
+<p>   两个参数都是字符串，按照字符串比较。不做类型转换</p>
+<p>   两个参数都是整数，按照整数比较。不做类型转换</p>
+<p>   如果不与数字进行比较，则将十六进制值视为二进制字符串。</p>
+<p>   有一个参数是 TIMESTAMP 或 DATETIME，并且另外一个参数是常量，常量会被转换为时间戳</p>
+<p>   有一个参数是 decimal 类型，如果另外一个参数是 decimal 或者整数，会将整数转换为 decimal 后进行比较，如果另外一个参数是浮点数，则会把 decimal 转换为浮点数进行比较</p>
+<p>   所有其他情况下，两个参数都会被转换为浮点数再进行比较</p>
+<p>最重要的是下面这句话，这是利用点：<br>    <strong>字符串和数字比较，需要将字符串转为浮点数，这很明显会转换失败</strong></p>
+<p>那么，将字符串转换的时候会产生一个warning，转换的结果为0，但是如果字符串的开头是数字的时候会从数字部分截断，转换为数字，所以上面为什么会返回所有值就可以理解了。</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p><code>where username=&#39;&#39;+&#39;&#39;;</code><br><code>where username=&#39;&#39;-&#39;&#39;;</code><br><code>where username=&#39;&#39;*&#39;&#39;;</code><br><code>where username=&#39;&#39;/6;</code><br><code>where username=&#39;&#39;%1;</code><br><code>where username=&#39;&#39;&amp;0;</code><br><code>where username=&#39;&#39;|0;</code><br><code>where username=&#39;&#39;^0;</code></p>
+<h6 id="移位操作"><a href="#移位操作" class="headerlink" title="移位操作"></a>移位操作</h6><p><code>&lt;&lt;0# &#39;&gt;&gt;0</code></p>
+<h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><p><code>where username=&#39;&#39;=0&lt;=&gt;1;</code><br><code>where username=&#39;&#39;=0&lt;&gt;0;</code><br><code>where username=&#39;&#39;&gt;-1;</code></p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p><code>&#39;+1 is not null#  &#39;in(-1,1)#  &#39;not in(1,0)#  &#39;like 1#  &#39;REGEXP 1#  &#39;BETWEEN 1 AND 1#  &#39;div 1#  &#39;xor 1#  &#39;=round(0,1)=&#39;1  &#39;&lt;&gt;ifnull(1,2)=&#39;1</code></p>
+
       
     </div>
     
@@ -392,6 +448,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL-SQLInjection-False/" rel="tag"><i class="fa fa-tag"></i> MySQL,SQLInjection,False</a>
+          
+        </div>
+      
 
       
       
@@ -401,8 +463,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/05/hello-world/" rel="next" title="Test">
-                <i class="fa fa-chevron-left"></i> Test
+              <a href="/2017/09/05/new-article/" rel="next" title="new article">
+                <i class="fa fa-chevron-left"></i> new article
               </a>
             
           </div>
@@ -410,10 +472,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/06/MySQL-False注入姿势学习/" rel="prev" title="MySQL False 注入姿势学习">
-                MySQL False 注入姿势学习 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -465,8 +523,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -558,6 +625,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-False-Injection"><span class="nav-number">1.</span> <span class="nav-text">0x01 False Injection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用"><span class="nav-number">2.</span> <span class="nav-text">利用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#移位操作"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">移位操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较运算符"><span class="nav-number">2.1.</span> <span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">2.2.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

