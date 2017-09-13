@@ -86,7 +86,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="MySQL Injection," />
 
 
 
@@ -104,14 +104,18 @@
 
 
 
+<meta name="description" content="注入常用函数与字符控制语句操作(select,case,if(),…) case用法比较操作(=,like,mod(),…)字符串的猜解操作(mid(),left(),rpad(),…)字符串生成操作(0x61,hex(),conv()(使用conv[10-36],10,36)可以实现所有字符的表示)) 注释符下面的是MySQL中可以用到的注释符: #,/,–,;%00,–+,反引号（只能在语句尾">
+<meta name="keywords" content="MySQL Injection">
 <meta property="og:type" content="article">
-<meta property="og:title" content="new article">
-<meta property="og:url" content="https://alisitaweb.github.io/2017/09/05/new-article/index.html">
+<meta property="og:title" content="基本MySQL注入攻击">
+<meta property="og:url" content="https://alisitaweb.github.io/2017/09/13/基本MySQL注入攻击/index.html">
 <meta property="og:site_name" content="Alisita&#39;s blogs">
+<meta property="og:description" content="注入常用函数与字符控制语句操作(select,case,if(),…) case用法比较操作(=,like,mod(),…)字符串的猜解操作(mid(),left(),rpad(),…)字符串生成操作(0x61,hex(),conv()(使用conv[10-36],10,36)可以实现所有字符的表示)) 注释符下面的是MySQL中可以用到的注释符: #,/,–,;%00,–+,反引号（只能在语句尾">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-05T09:02:39.457Z">
+<meta property="og:updated_time" content="2017-09-13T09:29:44.888Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="new article">
+<meta name="twitter:title" content="基本MySQL注入攻击">
+<meta name="twitter:description" content="注入常用函数与字符控制语句操作(select,case,if(),…) case用法比较操作(=,like,mod(),…)字符串的猜解操作(mid(),left(),rpad(),…)字符串生成操作(0x61,hex(),conv()(使用conv[10-36],10,36)可以实现所有字符的表示)) 注释符下面的是MySQL中可以用到的注释符: #,/,–,;%00,–+,反引号（只能在语句尾">
 
 
 
@@ -141,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="https://alisitaweb.github.io/2017/09/05/new-article/"/>
+  <link rel="canonical" href="https://alisitaweb.github.io/2017/09/13/基本MySQL注入攻击/"/>
 
 
 
 
 
-  <title>new article | Alisita's blogs</title>
+  <title>基本MySQL注入攻击 | Alisita's blogs</title>
   
 
 
@@ -315,7 +319,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2017/09/05/new-article/">
+    <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2017/09/13/基本MySQL注入攻击/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuanbo">
@@ -332,7 +336,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">new article</h1>
+          <h1 class="post-title" itemprop="name headline">基本MySQL注入攻击</h1>
         
 
         <div class="post-meta">
@@ -344,8 +348,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T17:02:39+08:00">
-                2017-09-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-13T17:28:58+08:00">
+                2017-09-13
               </time>
             
 
@@ -354,6 +358,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SQL-Injection/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL Injection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -382,7 +408,18 @@
       
 
       
-        
+        <h3 id="注入常用函数与字符"><a href="#注入常用函数与字符" class="headerlink" title="注入常用函数与字符"></a>注入常用函数与字符</h3><p>控制语句操作(select,case,if(),…) <a href="http://bobao.360.cn/learning/detail/3758.html" target="_blank" rel="external">case用法</a><br>比较操作(=,like,mod(),…)<br>字符串的猜解操作(mid(),left(),rpad(),…)<br>字符串生成操作(0x61,hex(),conv()(使用conv[10-36],10,36)可以实现所有字符的表示))</p>
+<h3 id="注释符"><a href="#注释符" class="headerlink" title="注释符"></a>注释符</h3><p>下面的是MySQL中可以用到的注释符:</p>
+<p>#,/<em>,–,;%00,–+,反引号（只能在语句尾使用,MySQL中的注释符）<br>examples:<br>`SELECT </em> FROM Users WHERE username = ‘’ OR 1=1 – -‘ AND password = ‘’;<br>SELECT * FROM Users WHERE id = ‘’ UNION SELECT 1, 2, 3`’;</p>
+<p>其他的常规的就不写了。。。</p>
+<h3 id="文件操作权限"><a href="#文件操作权限" class="headerlink" title="文件操作权限"></a>文件操作权限</h3><p>在MySQL中，存在一个称为secure_file_priv的全局变量，该变量用于限制数据的导入和导出操作，例如:<code>select ... into outfile</code>语句和LOAD_FILE()<br>如果secure_file_priv变量为空那么直接可以使用函数，如果为NULL是不能使用<br>本来应该默认为NULL的，但是不知道为什么我的wamp里的默认为空。。。</p>
+<h4 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h4><p>读文件LOAD_FILE()<br>Examples:<br><code>select load_file(&#39;/etc/passwd&#39;);</code><br><code>select load_file(0x272f6574632f70617373776427);</code><br>注意点：<br>load_file的默认目录是@@datadir<br>文件必须是当前用户可读<br>读文件最大的为1047552个byte,@@max_allowed_packet可以查看文件读取最大值</p>
+<h4 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h4><p>INTO OUTFILE/DUMPFILE<br>经典写文件例子:<br><code>select &#39;&lt;? system($_GET[\&#39;c\&#39;]); ?&gt; INTO OUTFILE &#39;/var/www/shell.php&#39;;</code><br>INTO OUTFILE 写文件时会在每一行的结束自动加上换行符<br>INTO DUMPFILE 写文件时会保证原生内容，这种适用于二进制文件<br>有一个文章讲，<a href="http://www.cnblogs.com/milantgh/p/5444398.html" target="_blank" rel="external">写文件讲解</a><br>注意点：<br>INTO OUTFILE不会覆盖文件<br>INTO OUTFILE必须是查询语句的最后一句<br>路径名是不能编码的，必须使用单引号</p>
+<h3 id="带外通道"><a href="#带外通道" class="headerlink" title="带外通道"></a>带外通道</h3><p>带外通道攻击主要是利用其它协议或者渠道从服务器提取数据，它可能是HTTP(s)请求，DNS解析服务，SMB服务，Mail服务等</p>
+<h4 id="条件限制"><a href="#条件限制" class="headerlink" title="条件限制"></a>条件限制</h4><p>这些函数是要绝对路径的<br>如果securre_file_priv变量为空那么可以直接使用函数，如果为NULL是不能使用</p>
+<h4 id="DNS注入"><a href="#DNS注入" class="headerlink" title="DNS注入"></a>DNS注入</h4><p>这个没搞明白，先搁起来</p>
+<h4 id="SMB-Relay-注入攻击"><a href="#SMB-Relay-注入攻击" class="headerlink" title="SMB Relay 注入攻击"></a>SMB Relay 注入攻击</h4><p>解释一下SMB Relay<br>假设有主机B与A<br>1.A向B发起连接请求<br>2.B向A发送挑战（一组随机数据，8字节）<br>3.A用源自明文口令的DESKEY对挑战进行标准DES加密得到响应，并发往B<br>4.</p>
+
       
     </div>
     
@@ -428,6 +465,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL-Injection/" rel="tag"><i class="fa fa-tag"></i> MySQL Injection</a>
+          
+        </div>
+      
 
       
       
@@ -437,8 +480,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/05/hello-world/" rel="next" title="Test">
-                <i class="fa fa-chevron-left"></i> Test
+              <a href="/2017/09/07/MySQL-一些注入技巧/" rel="next" title="MySQL 一些注入技巧">
+                <i class="fa fa-chevron-left"></i> MySQL 一些注入技巧
               </a>
             
           </div>
@@ -446,10 +489,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/06/MySQL-False注入姿势学习/" rel="prev" title="MySQL False 注入姿势学习">
-                MySQL False 注入姿势学习 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -529,8 +568,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -622,6 +670,22 @@ var jiathis_config={
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#注入常用函数与字符"><span class="nav-number">1.</span> <span class="nav-text">注入常用函数与字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注释符"><span class="nav-number">2.</span> <span class="nav-text">注释符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件操作权限"><span class="nav-number">3.</span> <span class="nav-text">文件操作权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读文件"><span class="nav-number">3.1.</span> <span class="nav-text">读文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写文件"><span class="nav-number">3.2.</span> <span class="nav-text">写文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带外通道"><span class="nav-number">4.</span> <span class="nav-text">带外通道</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#条件限制"><span class="nav-number">4.1.</span> <span class="nav-text">条件限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS注入"><span class="nav-number">4.2.</span> <span class="nav-text">DNS注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SMB-Relay-注入攻击"><span class="nav-number">4.3.</span> <span class="nav-text">SMB Relay 注入攻击</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
