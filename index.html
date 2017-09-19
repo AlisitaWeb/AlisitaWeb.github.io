@@ -315,6 +315,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2017/09/19/SQL注入防御与绕过的几种姿势/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuanbo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/aaa.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alisita's blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/19/SQL注入防御与绕过的几种姿势/" itemprop="url">SQL注入防御与绕过的几种姿势</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T15:11:00+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SQL-Injection/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL Injection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="PHP防御的几种姿势"><a href="#PHP防御的几种姿势" class="headerlink" title="PHP防御的几种姿势"></a>PHP防御的几种姿势</h3><h4 id="1-关闭错误提示"><a href="#1-关闭错误提示" class="headerlink" title="1.关闭错误提示"></a>1.关闭错误提示</h4><p>说明：<br>PHP配置文件php.ini中的display_errors=Off</p>
+<h4 id="2-魔术引号"><a href="#2-魔术引号" class="headerlink" title="2.魔术引号"></a>2.魔术引号</h4><p>说明：<br>当php.ini里的magic_quotes_gpc=On时，提交的变量中所有的单引号，双引号，反斜线，NUL（NULL字符）会自动转为含有反斜线的转义字符<br>魔术引号（Magic Quote）是一个自动将进入PHP脚本的数据进行转义的过程。（对所有的GET，POST，Cookie数据进行转义）<br>PHP 5.4 之前PHP指令magic_quotes_gpc默认是on<br>在PHP5.4.0起magic_quotes_gpc将始终返回FALSE</p>
+<h4 id="3-addslashes"><a href="#3-addslashes" class="headerlink" title="3.addslashes"></a>3.addslashes</h4><p>addslashes函数，它会在指定的预定义字符前添加反斜杠转义，这些预定义的字符是：单引号（’）、双引号（”）、反斜线（\）与 NUL（NULL 字符）<br>这个函数的作用和magic_quotes_gpc一样。所以一般用addslashes前会检查是否开了magic_quotes_gpc</p>
+<p>magic_quotes_gpc与addslashes的区别用法：</p>
+<p><strong>1）对于magic_quotes_gpc=on的情况</strong><br>我们可以不对输入和输出数据库的字符串数据作addslashes()和stripslashes()的操作,数据也会正常显示<br>如果此时你对输入的数据作了addslashes()处理，那么在输出的时候就必须使用stripslashes()去掉多余的反斜杠<br><strong>2）对于magic_quotes_gpc=off 的情况</strong><br>必须使用addslashes()对输入数据进行处理，但并不需要使用stripslashes()格式化输出<br>因为addslashes()并未将反斜杠一起写入数据库，只是帮助mysql完成了sql语句的执行</p>
+<h4 id="mysql-real-escape-string"><a href="#mysql-real-escape-string" class="headerlink" title="mysql_real_escape_string"></a>mysql_real_escape_string</h4><p>mysql_real_escape_string()函数转义 SQL 语句中使用的字符串中的特殊字符<br>下列字符受影响<br><code>\x00</code><br><code>\n</code><br><code>\r</code><br><code>\</code><br><code>&#39;</code><br><code>&quot;</code><br><code>\x1a</code><br>如果成功，则该函数返回被转义的字符串。如果失败，则返回 false<br>因为完全性问题，建议使用拥有Prepared Statement机制的PDO和MYSQLi来代替mysql_query，使用的是mysqli_real_escape_string</p>
+<h4 id="htmlspecialchars"><a href="#htmlspecialchars" class="headerlink" title="htmlspecialchars()"></a>htmlspecialchars()</h4><p>htmlspecialchars()函数把预定义的字符转换为 HTML实体<br>预定义的字符是:<br>`&amp; -&gt; &amp;<br> “  -&gt; &quot;<br>  ‘  -&gt; &#039;<br>  &lt; -&gt; &lt;</p>
+<blockquote>
+<p>-&gt; &gt;`</p>
+</blockquote>
+<h4 id="用正则匹配替换来过滤指定的字符"><a href="#用正则匹配替换来过滤指定的字符" class="headerlink" title="用正则匹配替换来过滤指定的字符"></a>用正则匹配替换来过滤指定的字符</h4><p><code>preg_match
+ preg_match_all()
+ preg_replace</code></p>
+<h4 id="转换数据类型"><a href="#转换数据类型" class="headerlink" title="转换数据类型"></a>转换数据类型</h4><p>根据「检查数据类型」的原则，查询之前要将输入数据转换为相应类型，如uid都应该经过intval函数格式为int型</p>
+<h4 id="使用预编译语句"><a href="#使用预编译语句" class="headerlink" title="使用预编译语句"></a>使用预编译语句</h4><p>绑定变量使用预编译语句是预防SQL注入的最佳方式，因为使用预编译的SQL语句语义不会发生改变，在SQL语句中，变量用问号?表示，攻击者无法改变SQL语句的结构，从根本上杜绝了SQL注入攻击的发生</p>
+<h3 id="几种绕过姿势"><a href="#几种绕过姿势" class="headerlink" title="几种绕过姿势"></a>几种绕过姿势</h3><h4 id="addslashes"><a href="#addslashes" class="headerlink" title="addslashes"></a>addslashes</h4><p>绕过：<br>1.将字符串转为16进制编码数据或使用char函数（十进制）进行转化（因为数据库会自动把16进制转化）<br>2.用注释符去掉输入密码部分如”–/*#”</p>
+<p>payload:<br><code>http://localhost/injection/user.php?username=admin--</code><br>注意– 后的空格<br><code>http://localhost/injection/user.php?username=admin/*</code><br>（escape不转义/*  )</p>
+<p><code>http://localhost/injection/user.php?username=admin%23</code><br>（这里的%23即为#，注释掉后面的密码部分。注意IE浏览器会将#转换为空）<br><code>http://localhost/injection/user.php?username=0x61646d696e23</code><br>（admin# –&gt;0x61646d696e23）<br><code>http://localhost/injection/user.php?username=CHAR(97,100, 109, 105, 110, 35)</code><br>（admin# –&gt;CHAR(97, 100, 109, 105, 110, 35)）</p>
+<p>关于编码原理：</p>
+<p>因为一般前端JavaScript都会escape()、encodeURL或encodeURIComponent编码再传输给服务器，主要为encodeURL，如下，所以可以利用这点</p>
+<p>1)escape( )<br>对ASCII字母、数字、标点符号”@* _ + - . /“不进行编码。在\u0000到\u00ff之间的符号被转成%xx的形式，其余符号被转成%uxxxx的形式。（注意escape()不对”+”编码，而平时表单中的空格会变成+）</p>
+<p>2) encodeURL<br>对” ;  / ? : @ &amp; = + $ , # ‘ “不进行编码。编码后，它输出符号的utf-8形式，并且在每个字节前加上%。</p>
+<p>3) encodeURIComponent<br>用于对URL的组成部分进行个别编码，而不用于对整个URL进行编码。<br>常用编码：<br><code>@ * _ + - ./ ;  \ ? : @ &amp; = + $ , # &#39; 空格</code></p>
+<p>转码工具可用：<br><a href="http://evilcos.me/lab/xssor/" target="_blank" rel="external">http://evilcos.me/lab/xssor/</a> </p>
+<h4 id="匹配过滤"><a href="#匹配过滤" class="headerlink" title="匹配过滤"></a>匹配过滤</h4><p>preg_match<br>绕过：<br>关键词 and,or 常被用做简单 测试网站是否容易进行注入攻击<br>过滤注入： 1 or 1 = 1    1 and 1 = 1<br>绕过注入： 1 || 1 = 1    1 &amp;&amp; 1 = 1<br><a href="http://www.cnblogs.com/croot/p/3450262.html" target="_blank" rel="external">混淆和绕过</a></p>
+<h4 id="strstr"><a href="#strstr" class="headerlink" title="strstr"></a>strstr</h4><p>strstr ()查找字符串的首次出现，该函数区分大小写。如果想要不区分大小写，使用stristr()。(注意后面这个函数多了个i)<br>绕过：<br>strstr()函数是对大小写敏感的，所以我们可以通过大小写变种来绕过<br>payload：<br><code>http://localhost/injection/user.php?id=1uNion select null,null,null</code></p>
+<h4 id="空格过滤"><a href="#空格过滤" class="headerlink" title="空格过滤"></a>空格过滤</h4><p>绕过：<br>1)使用内联注释。<br>2)使用换行符代替空格。注意服务器若为Windows则换行符为%0A%0D，Linux则为%0A<br>payload:<br><code>http://localhost/injection/user.php?id=1/**/and/**/1=1</code><br><code>http://localhost/injection/user.php?id=1%0A%0Dand%0A%0D1=1</code></p>
+<h4 id="空字节"><a href="#空字节" class="headerlink" title="空字节"></a>空字节</h4><p>通常的输入过滤器都是在应用程序之外的代码实现的。比如入侵检测系统（IDS），这些系统一般是由原生编程语言开发而成，比如C++，为什么空字节能起作用呢，就是因为在原生变成语言中，根据字符串起始位置到第一个出现空字节的位置来确定字符串长度。所以说空字节就有效的终止了字符串</p>
+<p>绕过：<br>只需要在过滤器阻止的字符串前面提供一个采用URL编码的空字节即可。</p>
+<p>payload:<br>%00</p>
+<h4 id="构造故意过滤"><a href="#构造故意过滤" class="headerlink" title="构造故意过滤"></a>构造故意过滤</h4><p>将传入的%27和%2527都进行删除处理，也就是还没传入数据库前就已经被该死的程序吃了，但是在看到他还吃了<em>，这样我们就有办法了，我们构造%</em>27，这样程序吃掉星号*后，%27就会被传入</p>
+<p>payload：<br><code>http://localhost/injection/user.php?id%3D1%*27%*20and%*20%*271%*27%3D%*271</code></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2017/09/16/浏览器同源策略/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1317,7 +1492,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
