@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alisitaweb.github.io/"/>
-  <updated>2017-09-19T07:12:50.190Z</updated>
+  <updated>2017-09-25T02:53:43.954Z</updated>
   <id>https://alisitaweb.github.io/</id>
   
   <author>
@@ -14,6 +14,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL偏门技巧</title>
+    <link href="https://alisitaweb.github.io/2017/09/25/MySQL%E5%81%8F%E9%97%A8%E6%8A%80%E5%B7%A7/"/>
+    <id>https://alisitaweb.github.io/2017/09/25/MySQL偏门技巧/</id>
+    <published>2017-09-25T02:53:03.711Z</published>
+    <updated>2017-09-25T02:53:43.954Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="group-by-with-rollup的用法"><a href="#group-by-with-rollup的用法" class="headerlink" title="group by with rollup的用法"></a>group by with rollup的用法</h3><p>这个主要用来绕过查询结果行数是否唯一，再验证所得密码是否相同<br>直接上图看的清楚一些<br><img src="./images/TIM%E6%88%AA%E5%9B%BE20170925100537.png" alt="enter description here" title="TIM截图20170925100537"></p>
+<h3 id="绕过未知字段名的技巧"><a href="#绕过未知字段名的技巧" class="headerlink" title="绕过未知字段名的技巧"></a>绕过未知字段名的技巧</h3><p>逗号用join绕过，使用联合查询<br>limit 1,1 —-&gt; limit 1 offset 1<br><a href="http://drops.blbana.cc/2017/05/20/SQLi-%E2%80%94%E2%80%94-%E9%80%97%E5%8F%B7%EF%BC%8C%E7%A9%BA%E6%A0%BC%EF%BC%8C%E5%AD%97%E6%AE%B5%E5%90%8D%E8%BF%87%E6%BB%A4%E7%AA%81%E7%A0%B4/" target="_blank" rel="external">原文</a><br><a href="http://www.venenof.com/index.php/archives/240/" target="_blank" rel="external">原文2</a><br>真的是涨姿势</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;group-by-with-rollup的用法&quot;&gt;&lt;a href=&quot;#group-by-with-rollup的用法&quot; class=&quot;headerlink&quot; title=&quot;group by with rollup的用法&quot;&gt;&lt;/a&gt;group by with rol
+    
+    </summary>
+    
+      <category term="SQL Injection" scheme="https://alisitaweb.github.io/categories/SQL-Injection/"/>
+    
+    
+      <category term="MySQL Injection" scheme="https://alisitaweb.github.io/tags/MySQL-Injection/"/>
+    
+  </entry>
   
   <entry>
     <title>SQL注入防御与绕过的几种姿势</title>
