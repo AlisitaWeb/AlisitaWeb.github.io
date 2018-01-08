@@ -315,6 +315,132 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2018/01/08/机器学习logistic回归1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuanbo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/aaa.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alisita's blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/08/机器学习logistic回归1/" itemprop="url">logistic回归</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-08T22:40:48+08:00">
+                2018-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="二分分类"><a href="#二分分类" class="headerlink" title="二分分类"></a>二分分类</h3><p>假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0<br>图片在计算机中保存，要分为三个矩阵，分别对应红绿蓝三个颜色通道，<br>为了方便，这里用5X4的演示</p>
+<p>把这些亮度值，放入一个特征向量(feature vector)x中<br><code>x=[255,251,.......,255,134.....]</code><br>如果图片是64X64的，向量x的总维度<br>64X    64X3 = 12288<br><code>nx=12288</code><br>来表示向量x的总维度<br>在二分分类问题中，目的是训练出一个分类器，以图片的特征向量作为输入量，预测输出的y是0，还是1</p>
+<p>用(x,y)来表示一个样本，训练集有m个集合组成<br><code>{(x^(1),y^(1)},(x^(2),y^(2)),.....(x^(m),y^(m))}</code><br>表示整个训练集<br><code>m_train</code><br>表示训练集<br><code>m_test</code><br>表示测试集<br>为了更好的表示，定义一个大矩阵X,<br><code>X=[......................
+      x^(1),x^(2),......x^(m)
+      ......................]</code><br>这个矩阵有m列，有nx行<br>定义一个矩阵Y<br><code>Y=[y^(1),y^(2),.....y^(m)]</code><br>=<a href="./attachments/C1W2L01%20notes.pdf">enter description here</a><br>=<a href="./attachments/C1W2L01%20slides.pdf">enter description here</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2017/09/25/MySQL偏门技巧/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1637,7 +1763,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1659,7 +1785,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1728,7 +1854,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

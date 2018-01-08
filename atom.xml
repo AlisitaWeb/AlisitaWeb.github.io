@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alisitaweb.github.io/"/>
-  <updated>2017-09-25T02:53:43.954Z</updated>
+  <updated>2018-01-08T14:40:48.855Z</updated>
   <id>https://alisitaweb.github.io/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>logistic回归</title>
+    <link href="https://alisitaweb.github.io/2018/01/08/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0logistic%E5%9B%9E%E5%BD%921/"/>
+    <id>https://alisitaweb.github.io/2018/01/08/机器学习logistic回归1/</id>
+    <published>2018-01-08T14:40:48.854Z</published>
+    <updated>2018-01-08T14:40:48.855Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="二分分类"><a href="#二分分类" class="headerlink" title="二分分类"></a>二分分类</h3><p>假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0<br>图片在计算机中保存，要分为三个矩阵，分别对应红绿蓝三个颜色通道，<br>为了方便，这里用5X4的演示</p>
+<p>把这些亮度值，放入一个特征向量(feature vector)x中<br><code>x=[255,251,.......,255,134.....]</code><br>如果图片是64X64的，向量x的总维度<br>64X    64X3 = 12288<br><code>nx=12288</code><br>来表示向量x的总维度<br>在二分分类问题中，目的是训练出一个分类器，以图片的特征向量作为输入量，预测输出的y是0，还是1</p>
+<p>用(x,y)来表示一个样本，训练集有m个集合组成<br><code>{(x^(1),y^(1)},(x^(2),y^(2)),.....(x^(m),y^(m))}</code><br>表示整个训练集<br><code>m_train</code><br>表示训练集<br><code>m_test</code><br>表示测试集<br>为了更好的表示，定义一个大矩阵X,<br><code>X=[......................
+      x^(1),x^(2),......x^(m)
+      ......................]</code><br>这个矩阵有m列，有nx行<br>定义一个矩阵Y<br><code>Y=[y^(1),y^(2),.....y^(m)]</code><br>=<a href="./attachments/C1W2L01%20notes.pdf">enter description here</a><br>=<a href="./attachments/C1W2L01%20slides.pdf">enter description here</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;二分分类&quot;&gt;&lt;a href=&quot;#二分分类&quot; class=&quot;headerlink&quot; title=&quot;二分分类&quot;&gt;&lt;/a&gt;二分分类&lt;/h3&gt;&lt;p&gt;假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0&lt;br&gt;图片在计算机中保存，要分为三个矩阵，分别对应红
+    
+    </summary>
+    
+    
+      <category term="机器学习" scheme="https://alisitaweb.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>MySQL偏门技巧</title>

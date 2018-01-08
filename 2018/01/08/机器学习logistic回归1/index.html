@@ -86,7 +86,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习," />
 
 
 
@@ -104,13 +104,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Alisita&#39;s blogs">
-<meta property="og:url" content="https://alisitaweb.github.io/archives/index.html">
+<meta name="description" content="二分分类假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0图片在计算机中保存，要分为三个矩阵，分别对应红绿蓝三个颜色通道，为了方便，这里用5X4的演示 把这些亮度值，放入一个特征向量(feature vector)x中x=[255,251,.......,255,134.....]如果图片是64X64的，向量x的总维度64X    64X3 = 12288nx=12288来表示">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="logistic回归">
+<meta property="og:url" content="https://alisitaweb.github.io/2018/01/08/机器学习logistic回归1/index.html">
 <meta property="og:site_name" content="Alisita&#39;s blogs">
+<meta property="og:description" content="二分分类假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0图片在计算机中保存，要分为三个矩阵，分别对应红绿蓝三个颜色通道，为了方便，这里用5X4的演示 把这些亮度值，放入一个特征向量(feature vector)x中x=[255,251,.......,255,134.....]如果图片是64X64的，向量x的总维度64X    64X3 = 12288nx=12288来表示">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-08T14:40:48.855Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Alisita&#39;s blogs">
+<meta name="twitter:title" content="logistic回归">
+<meta name="twitter:description" content="二分分类假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0图片在计算机中保存，要分为三个矩阵，分别对应红绿蓝三个颜色通道，为了方便，这里用5X4的演示 把这些亮度值，放入一个特征向量(feature vector)x中x=[255,251,.......,255,134.....]如果图片是64X64的，向量x的总维度64X    64X3 = 12288nx=12288来表示">
 
 
 
@@ -140,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="https://alisitaweb.github.io/archives/"/>
+  <link rel="canonical" href="https://alisitaweb.github.io/2018/01/08/机器学习logistic回归1/"/>
 
 
 
 
 
-  <title>归档 | Alisita's blogs</title>
+  <title>logistic回归 | Alisita's blogs</title>
   
 
 
@@ -165,7 +170,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/AlisitaWeb"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
@@ -300,375 +305,208 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://alisitaweb.github.io/2018/01/08/机器学习logistic回归1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuanbo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/aaa.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alisita's blogs">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">logistic回归</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-08T22:40:48+08:00">
+                2018-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 9 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/08/机器学习logistic回归1/" itemprop="url">
-              
-                <span itemprop="name">logistic回归</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-08T22:40:48+08:00"
-              content="2018-01-08" >
-          01-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
+            
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/25/MySQL偏门技巧/" itemprop="url">
-              
-                <span itemprop="name">MySQL偏门技巧</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-25T10:53:03+08:00"
-              content="2017-09-25" >
-          09-25
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/SQL注入防御与绕过的几种姿势/" itemprop="url">
-              
-                <span itemprop="name">SQL注入防御与绕过的几种姿势</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T15:11:00+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/16/浏览器同源策略/" itemprop="url">
-              
-                <span itemprop="name">浏览器同源策略</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-16T12:00:23+08:00"
-              content="2017-09-16" >
-          09-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h3 id="二分分类"><a href="#二分分类" class="headerlink" title="二分分类"></a>二分分类</h3><p>假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0<br>图片在计算机中保存，要分为三个矩阵，分别对应红绿蓝三个颜色通道，<br>为了方便，这里用5X4的演示</p>
+<p>把这些亮度值，放入一个特征向量(feature vector)x中<br><code>x=[255,251,.......,255,134.....]</code><br>如果图片是64X64的，向量x的总维度<br>64X    64X3 = 12288<br><code>nx=12288</code><br>来表示向量x的总维度<br>在二分分类问题中，目的是训练出一个分类器，以图片的特征向量作为输入量，预测输出的y是0，还是1</p>
+<p>用(x,y)来表示一个样本，训练集有m个集合组成<br><code>{(x^(1),y^(1)},(x^(2),y^(2)),.....(x^(m),y^(m))}</code><br>表示整个训练集<br><code>m_train</code><br>表示训练集<br><code>m_test</code><br>表示测试集<br>为了更好的表示，定义一个大矩阵X,<br><code>X=[......................
+      x^(1),x^(2),......x^(m)
+      ......................]</code><br>这个矩阵有m列，有nx行<br>定义一个矩阵Y<br><code>Y=[y^(1),y^(2),.....y^(m)]</code><br>=<a href="./attachments/C1W2L01%20notes.pdf">enter description here</a><br>=<a href="./attachments/C1W2L01%20slides.pdf">enter description here</a></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/13/基本MySQL注入攻击/" itemprop="url">
-              
-                <span itemprop="name">基本MySQL注入攻击</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-13T17:28:58+08:00"
-              content="2017-09-13" >
-          09-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/07/MySQL-一些注入技巧/" itemprop="url">
-              
-                <span itemprop="name">MySQL 一些注入技巧</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-07T14:29:07+08:00"
-              content="2017-09-07" >
-          09-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/06/MySQL-False注入姿势学习/" itemprop="url">
-              
-                <span itemprop="name">MySQL False 注入姿势学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-06T21:43:32+08:00"
-              content="2017-09-06" >
-          09-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/05/new-article/" itemprop="url">
-              
-                <span itemprop="name">new article</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-05T17:02:39+08:00"
-              content="2017-09-05" >
-          09-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/05/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Test</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-05T10:26:15+08:00"
-              content="2017-09-05" >
-          09-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="yuanbo 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="yuanbo 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/25/MySQL偏门技巧/" rel="next" title="MySQL偏门技巧">
+                <i class="fa fa-chevron-left"></i> MySQL偏门技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
 
 
           </div>
@@ -676,6 +514,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDcyNC83Mjc3"></div>
+    
+  </div>
+
 
         </div>
         
@@ -696,8 +540,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -789,6 +642,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#二分分类"><span class="nav-number">1.</span> <span class="nav-text">二分分类</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -908,6 +777,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 
@@ -936,6 +809,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
