@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alisitaweb.github.io/"/>
-  <updated>2018-01-09T13:04:41.476Z</updated>
+  <updated>2018-01-09T13:08:25.954Z</updated>
   <id>https://alisitaweb.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://alisitaweb.github.io/2018/01/08/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0logistic%E5%9B%9E%E5%BD%921/"/>
     <id>https://alisitaweb.github.io/2018/01/08/机器学习logistic回归1/</id>
     <published>2018-01-08T14:40:48.854Z</published>
-    <updated>2018-01-09T13:04:41.476Z</updated>
+    <updated>2018-01-09T13:08:25.954Z</updated>
     
     <content type="html"><![CDATA[<h3 id="二分分类"><a href="#二分分类" class="headerlink" title="二分分类"></a>二分分类</h3><p>假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0<br>图片在计算机中保存，要分为三个矩阵，分别对应红绿蓝三个颜色通道，<br>为了方便，这里用5X4的演示</p>
 <p>把这些亮度值，放入一个特征向量(feature vector)x中<br><code>x=[255,251,.......,255,134.....]</code><br>如果图片是64X64的，向量x的总维度<br>64X    64X3 = 12288<br><code>nx=12288</code><br>来表示向量x的总维度<br>在二分分类问题中，目的是训练出一个分类器，以图片的特征向量作为输入量，预测输出的y是0，还是1</p>
@@ -28,22 +28,7 @@
 <h3 id="logisitic回归-logistic-Regression"><a href="#logisitic回归-logistic-Regression" class="headerlink" title="logisitic回归(logistic Regression)"></a>logisitic回归(logistic Regression)</h3><p>已知输入向量x，例如是一张图片，判断是否是猫图，需要一个算法，得出预测值ŷ，ŷ是一个概率(当x满足条件是，y就是1)<br>x是一个nx维向量，参数w也是一个nx维向量，b是一个实数<br><code>ŷ = sigmoid(w^T * x + b)</code><br>sigmoid是为了将概率限制在[0,1]</p>
 <h3 id="logisitic回归损失函数-logistic-Regression-cost-function"><a href="#logisitic回归损失函数-logistic-Regression-cost-function" class="headerlink" title="logisitic回归损失函数(logistic Regression cost function)"></a>logisitic回归损失函数(logistic Regression cost function)</h3><p>Loss(error)function:<br>    <code>L(ŷ,y)=-(ylogŷ+(1-y)log(1-ŷ))</code><br>Cost function:<br>    <code>J(w,b) = 1/m * L(ŷ^(i),y^(i)) = -1/m * ( y^(i)logŷ^(i) + (1-y^(i)log(1-ŷ^(i)))</code><br>    i = [1,m]<br>要让J越小越好</p>
 <h3 id="logistic回归中的梯度下降法"><a href="#logistic回归中的梯度下降法" class="headerlink" title="logistic回归中的梯度下降法"></a>logistic回归中的梯度下降法</h3><p>对于单个样本<br>假设有两个样本特征向量x1,x2,<br>参数w1，w2，b<br><code>z = w1x1 + w2x2 + b</code><br><code>ŷ = a = sigmoid(z)</code><br><code>L(a,y)</code><br>然后向前求导数<br><code>da = dL(a,y)/da = -(y/a)+(1-y)/(1-a)</code><br><code>dz = dL/dz = a-y</code><br><code>dw1 = x1 * dz</code><br><code>dw2 = x2 * dz</code><br><code>db = dz</code><br>然后更新w1,w2,b<br><code>w1 = w1 - αdw1</code><br><code>w2 = w2 - αdw2</code><br><code>b = b - αdb</code></p>
-<p>对于m各训练样本<br>下面实现的是伪代码<br><code>J=0; dw1=0; dw2=0;db=0;
- for i=1 to m
-     z^(i) = w^T*x^(i) + b
-    a^(i) = sigmoid(z^i)
-    J += -( y^(i)loga^(i) + (1-y^(i)log(1-a^(i)))
-    dz^(i) = a^(i) - y^(i)
-    dw1 += x1^(i)dz^(i)
-    dw2 += x2^(i)dz^(i)
-    db += dz^(i)
- J /= m
- dw1 /= m    注释 dw1 = dJ/dw1
- dw2 /= m
- db /= m
- w1 = w1 - αdw1
- w2 = w2 - αdw2
- b = b - αdb</code></p>
+<p>对于m各训练样本<br>下面实现的是伪代码<br><code>J=0; dw1=0; dw2=0;db=0;</code><br> <code>for i=1 to m</code><br>     <code>z^(i) = w^T*x^(i) + b</code><br>    <code>a^(i) = sigmoid(z^i)</code><br>    <code>J += -( y^(i)loga^(i) + (1-y^(i)log(1-a^(i)))</code><br>    <code>dz^(i) = a^(i) - y^(i)</code><br>    <code>dw1 += x1^(i)dz^(i)</code><br>    <code>dw2 += x2^(i)dz^(i)</code><br>    <code>db += dz^(i)</code><br> <code>J /= m</code><br> <code>dw1 /= m    注释 dw1 = dJ/dw1</code><br> <code>dw2 /= m</code><br> <code>db /= m</code><br> <code>w1 = w1 - αdw1</code><br> <code>w2 = w2 - αdw2</code><br> <code>b = b - αdb</code></p>
 ]]></content>
     
     <summary type="html">
