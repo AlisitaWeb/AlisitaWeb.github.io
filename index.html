@@ -392,8 +392,22 @@
 <h3 id="logisitic回归-logistic-Regression"><a href="#logisitic回归-logistic-Regression" class="headerlink" title="logisitic回归(logistic Regression)"></a>logisitic回归(logistic Regression)</h3><p>已知输入向量x，例如是一张图片，判断是否是猫图，需要一个算法，得出预测值ŷ，ŷ是一个概率(当x满足条件是，y就是1)<br>x是一个nx维向量，参数w也是一个nx维向量，b是一个实数<br><code>ŷ = sigmoid(w^T * x + b)</code><br>sigmoid是为了将概率限制在[0,1]</p>
 <h3 id="logisitic回归损失函数-logistic-Regression-cost-function"><a href="#logisitic回归损失函数-logistic-Regression-cost-function" class="headerlink" title="logisitic回归损失函数(logistic Regression cost function)"></a>logisitic回归损失函数(logistic Regression cost function)</h3><p>Loss(error)function:<br>    <code>L(ŷ,y)=-(ylogŷ+(1-y)log(1-ŷ))</code><br>Cost function:<br>    <code>J(w,b) = 1/m * L(ŷ^(i),y^(i)) = -1/m * ( y^(i)logŷ^(i) + (1-y^(i)log(1-ŷ^(i)))</code><br>    i = [1,m]<br>要让J越小越好</p>
 <h3 id="logistic回归中的梯度下降法"><a href="#logistic回归中的梯度下降法" class="headerlink" title="logistic回归中的梯度下降法"></a>logistic回归中的梯度下降法</h3><p>对于单个样本<br>假设有两个样本特征向量x1,x2,<br>参数w1，w2，b<br><code>z = w1x1 + w2x2 + b</code><br><code>ŷ = a = sigmoid(z)</code><br><code>L(a,y)</code><br>然后向前求导数<br><code>da = dL(a,y)/da = -(y/a)+(1-y)/(1-a)</code><br><code>dz = dL/dz = a-y</code><br><code>dw1 = x1 * dz</code><br><code>dw2 = x2 * dz</code><br><code>db = dz</code><br>然后更新w1,w2,b<br><code>w1 = w1 - αdw1</code><br><code>w2 = w2 - αdw2</code><br><code>b = b - αdb</code></p>
-<p>对于m各训练样本<br>下面实现的是伪代码<br>`J=0; dw1=0; dw2=0;db=0;<br> for i=1 to m<br>     z^(i) = w^T*x^(i) + b<br>    a^(i) = sigmoid(z^i)<br>    J += -( y^(i)loga^(i) + (1-y^(i)log(1-a^(i)))<br>    dz^(i) = a^(i) - y^(i)<br>    dw1 += x1^(i)dz^(i)<br>    dw2 += x2^(i)dz^(i)<br>    db += dz^(i)<br> J /= m<br> dw1 /= m    注释 dw1 = dJ/dw1<br> dw2 /= m<br> db /= m</p>
-<p> w1 = w1 - αdw1<br> w2 = w2 - αdw2<br> b = b - αdb`</p>
+<p>对于m各训练样本<br>下面实现的是伪代码<br><code>J=0; dw1=0; dw2=0;db=0;
+ for i=1 to m
+     z^(i) = w^T*x^(i) + b
+    a^(i) = sigmoid(z^i)
+    J += -( y^(i)loga^(i) + (1-y^(i)log(1-a^(i)))
+    dz^(i) = a^(i) - y^(i)
+    dw1 += x1^(i)dz^(i)
+    dw2 += x2^(i)dz^(i)
+    db += dz^(i)
+ J /= m
+ dw1 /= m    注释 dw1 = dJ/dw1
+ dw2 /= m
+ db /= m
+ w1 = w1 - αdw1
+ w2 = w2 - αdw2
+ b = b - αdb</code></p>
 
           
         
