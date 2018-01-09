@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="Alisita&#39;s blogs">
 <meta property="og:description" content="二分分类假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0图片在计算机中保存，要分为三个矩阵，分别对应红绿蓝三个颜色通道，为了方便，这里用5X4的演示 把这些亮度值，放入一个特征向量(feature vector)x中x=[255,251,.......,255,134.....]如果图片是64X64的，向量x的总维度64X    64X3 = 12288nx=12288来表示">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-08T15:14:00.453Z">
+<meta property="og:updated_time" content="2018-01-09T13:01:19.761Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="logistic回归">
 <meta name="twitter:description" content="二分分类假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0图片在计算机中保存，要分为三个矩阵，分别对应红绿蓝三个颜色通道，为了方便，这里用5X4的演示 把这些亮度值，放入一个特征向量(feature vector)x中x=[255,251,.......,255,134.....]如果图片是64X64的，向量x的总维度64X    64X3 = 12288nx=12288来表示">
@@ -389,7 +389,11 @@
         <h3 id="二分分类"><a href="#二分分类" class="headerlink" title="二分分类"></a>二分分类</h3><p>假如有一张图片需要识别是否是猫作为输入，如果是猫，输出1，否则，输出0<br>图片在计算机中保存，要分为三个矩阵，分别对应红绿蓝三个颜色通道，<br>为了方便，这里用5X4的演示</p>
 <p>把这些亮度值，放入一个特征向量(feature vector)x中<br><code>x=[255,251,.......,255,134.....]</code><br>如果图片是64X64的，向量x的总维度<br>64X    64X3 = 12288<br><code>nx=12288</code><br>来表示向量x的总维度<br>在二分分类问题中，目的是训练出一个分类器，以图片的特征向量作为输入量，预测输出的y是0，还是1</p>
 <p>用(x,y)来表示一个样本，训练集有m个集合组成<br><code>{(x^(1),y^(1)},(x^(2),y^(2)),.....(x^(m),y^(m))}</code><br>表示整个训练集<br><code>m_train</code><br>表示训练集<br><code>m_test</code><br>表示测试集<br>为了更好的表示，定义一个大矩阵X,<br><code>X=[...... x^(1)...... , .......x^(2)........ , ..... , ......x^(m)......]</code><br>这个矩阵有m列，有nx行<br>定义一个矩阵Y<br><code>Y=[y^(1),y^(2),.....y^(m)]</code><br>=<a href="./attachments/C1W2L01%20notes.pdf">enter description here</a><br>=<a href="./attachments/C1W2L01%20slides.pdf">enter description here</a></p>
-<h3 id="logisitic回归"><a href="#logisitic回归" class="headerlink" title="logisitic回归"></a>logisitic回归</h3><p>已知输入向量x，例如是一张图片，判断是否是猫图，需要一个算法，得出预测值ŷ，ŷ是一个概率(当x满足条件是，y就是1)<br>x是一个nx维向量，参数w也是一个nx维向量，b是一个实数<br><code>ŷ = sigmoid(w^T * x + b)</code><br>sigmoid是为了将概率限制在[0,1]</p>
+<h3 id="logisitic回归-logistic-Regression"><a href="#logisitic回归-logistic-Regression" class="headerlink" title="logisitic回归(logistic Regression)"></a>logisitic回归(logistic Regression)</h3><p>已知输入向量x，例如是一张图片，判断是否是猫图，需要一个算法，得出预测值ŷ，ŷ是一个概率(当x满足条件是，y就是1)<br>x是一个nx维向量，参数w也是一个nx维向量，b是一个实数<br><code>ŷ = sigmoid(w^T * x + b)</code><br>sigmoid是为了将概率限制在[0,1]</p>
+<h3 id="logisitic回归损失函数-logistic-Regression-cost-function"><a href="#logisitic回归损失函数-logistic-Regression-cost-function" class="headerlink" title="logisitic回归损失函数(logistic Regression cost function)"></a>logisitic回归损失函数(logistic Regression cost function)</h3><p>Loss(error)function:<br>    <code>L(ŷ,y)=-(ylogŷ+(1-y)log(1-ŷ))</code><br>Cost function:<br>    <code>J(w,b) = 1/m * L(ŷ^(i),y^(i)) = -1/m * ( y^(i)logŷ^(i) + (1-y^(i)log(1-ŷ^(i)))</code><br>    i = [1,m]<br>要让J越小越好</p>
+<h3 id="logistic回归中的梯度下降法"><a href="#logistic回归中的梯度下降法" class="headerlink" title="logistic回归中的梯度下降法"></a>logistic回归中的梯度下降法</h3><p>对于单个样本<br>假设有两个样本特征向量x1,x2,<br>参数w1，w2，b<br><code>z = w1x1 + w2x2 + b</code><br><code>ŷ = a = sigmoid(z)</code><br><code>L(a,y)</code><br>然后向前求导数<br><code>da = dL(a,y)/da = -(y/a)+(1-y)/(1-a)</code><br><code>dz = dL/dz = a-y</code><br><code>dw1 = x1 * dz</code><br><code>dw2 = x2 * dz</code><br><code>db = dz</code><br>然后更新w1,w2,b<br><code>w1 = w1 - αdw1</code><br><code>w2 = w2 - αdw2</code><br><code>b = b - αdb</code></p>
+<p>对于m各训练样本<br>下面实现的是伪代码<br>`J=0; dw1=0; dw2=0;db=0;<br> for i=1 to m<br>     z^(i) = w^T*x^(i) + b<br>    a^(i) = sigmoid(z^i)<br>    J += -( y^(i)loga^(i) + (1-y^(i)log(1-a^(i)))<br>    dz^(i) = a^(i) - y^(i)<br>    dw1 += x1^(i)dz^(i)<br>    dw2 += x2^(i)dz^(i)<br>    db += dz^(i)<br> J /= m<br> dw1 /= m    注释 dw1 = dJ/dw1<br> dw2 /= m<br> db /= m</p>
+<p> w1 = w1 - αdw1<br> w2 = w2 - αdw2<br> b = b - αdb`</p>
 
       
     </div>
@@ -651,7 +655,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#二分分类"><span class="nav-number">1.</span> <span class="nav-text">二分分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logisitic回归"><span class="nav-number">2.</span> <span class="nav-text">logisitic回归</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#二分分类"><span class="nav-number">1.</span> <span class="nav-text">二分分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logisitic回归-logistic-Regression"><span class="nav-number">2.</span> <span class="nav-text">logisitic回归(logistic Regression)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logisitic回归损失函数-logistic-Regression-cost-function"><span class="nav-number">3.</span> <span class="nav-text">logisitic回归损失函数(logistic Regression cost function)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logistic回归中的梯度下降法"><span class="nav-number">4.</span> <span class="nav-text">logistic回归中的梯度下降法</span></a></li></ol></div>
             
 
           </div>
